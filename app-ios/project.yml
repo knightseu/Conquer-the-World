@@ -1,0 +1,95 @@
+# Generate the Xcode project with `xcodegen generate` (the .xcodeproj is not committed).
+name: ConquerTheWorld
+options:
+  bundleIdPrefix: com.example.conquertheworld # placeholder, see TODO.md (Bundle ID)
+  deploymentTarget:
+    iOS: "17.0"
+  createIntermediateGroups: true
+  developmentLanguage: en
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "0.1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    TARGETED_DEVICE_FAMILY: "1" # iPhone only
+
+packages:
+  MapLibre:
+    url: https://github.com/maplibre/maplibre-gl-native-distribution
+    from: 7.1.0
+  swift-openapi-generator:
+    url: https://github.com/apple/swift-openapi-generator
+    from: 1.14.4
+  swift-openapi-runtime:
+    url: https://github.com/apple/swift-openapi-runtime
+    from: 1.13.4
+  swift-openapi-urlsession:
+    url: https://github.com/apple/swift-openapi-urlsession
+    from: 1.4.0
+  Sentry:
+    url: https://github.com/getsentry/sentry-cocoa
+    from: 9.35.0
+
+targets:
+  ConquerTheWorld:
+    type: application
+    platform: iOS
+    sources:
+      - path: ConquerTheWorld
+    dependencies:
+      - package: MapLibre
+      - package: swift-openapi-runtime
+        product: OpenAPIRuntime
+      - package: swift-openapi-urlsession
+        product: OpenAPIURLSession
+      - package: Sentry
+    buildToolPlugins:
+      # Generates the API client from ConquerTheWorld/API/openapi.yaml,
+      # a symlink to the repo's api/openapi.yaml (the contract's source of truth).
+      - plugin: OpenAPIGenerator
+        package: swift-openapi-generator
+    info:
+      path: ConquerTheWorld/Info.plist
+      properties:
+        CFBundleDisplayName: Conquer the World
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        UIBackgroundModes: [location]
+        NSLocationWhenInUseUsageDescription: >-
+          Conquer the World records your route while a Track is running, including
+          when the app is in the background or your screen is locked, so loops you
+          walk, run, cycle or drive can claim Lands. Your route is never shown to
+          other people; they only see the Lands you claim.
+        NSMotionUsageDescription: >-
+          Motion data helps tell walking, running, cycling and driving apart, so
+          each part of your Track scores in the right category.
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+        APIBaseURL: $(API_BASE_URL)
+        SentryDSN: $(SENTRY_DSN)
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.example.conquertheworld.app
+        API_BASE_URL: http://localhost:3000
+        SENTRY_DSN: ""
+      configs:
+        Release:
+          API_BASE_URL: https://ctw-api.onrender.com
+
+  ConquerTheWorldTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: ConquerTheWorldTests
+    dependencies:
+      - target: ConquerTheWorld
+
+schemes:
+  ConquerTheWorld:
+    build:
+      targets:
+        ConquerTheWorld: all
+        ConquerTheWorldTests: [test]
+    test:
+      targets: [ConquerTheWorldTests]
