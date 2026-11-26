@@ -4,13 +4,13 @@ No implementation is planned for now. These items were left open on purpose.
 
 ## Unverified (M0, issue #2)
 - [ ] Install `xcodegen` (`brew install xcodegen`); it was not installed locally.
-- [ ] Generate the Xcode project: `cd myland/app-ios && xcodegen generate`.
-- [ ] Run `xcodebuild build -project MyLand.xcodeproj -scheme MyLand -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO`. Only a `swiftc -typecheck` against the iOS 17 simulator SDK has been done.
-- [ ] Run the app against the local server (`cd myland/server && npm run dev`) and confirm it shows `Server: ok`. This is the done condition for #2.
-- [ ] Push and confirm the GitHub Actions workflow `.github/workflows/myland.yml` passes (both `server` and `ios` jobs). It has never run.
+- [ ] Generate the Xcode project: `cd app-ios && xcodegen generate`.
+- [ ] Run `xcodebuild build -project ConquerTheWorld.xcodeproj -scheme ConquerTheWorld -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO`. Only a `swiftc -typecheck` against the iOS 17 simulator SDK has been done.
+- [ ] Run the app against the local server (`cd server && npm run dev`) and confirm it shows `Server: ok`. This is the done condition for #2.
+- [ ] Push and confirm the GitHub Actions workflow `.github/workflows/ci.yml` passes (both `server` and `ios` jobs). It has never run.
 
 ## Deferred decisions
-- [ ] **Bundle ID:** `myland/app-ios/project.yml` uses the placeholder prefix `com.example.myland`. Decide the real one before any TestFlight/App Store work (M7) or code signing.
+- [ ] **Bundle ID:** `app-ios/project.yml` uses the placeholder prefix `com.example.conquertheworld`. Decide the real one before any TestFlight/App Store work (M7) or code signing.
 - [ ] **Revisit the rot mechanism** (SPEC F10). Currently a provisional continuous half-life: Exercise score halves after 1 year without a visit. Revisit the curve. (Decided: the clock is per Land and Travel score does not rot.)
 - [ ] Tune score weights and movement thresholds (deferred; all weights equal for now).
 - [ ] **Occupation Percentage** (user progress per place): out of v1, decided by owner. Open sub-questions when revisited: denominator = claimable area (exclude water, buildings, private land) rather than total area; Explored % (ever claimed, only grows) vs Owned % (currently owned, contestable); treat ≥95% as 100%.

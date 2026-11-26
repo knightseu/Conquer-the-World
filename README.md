@@ -20,5 +20,5 @@
 * `TODO.md` – deferred decisions and unverified items
 * `api/openapi.yaml` – HTTP contract between clients and server
 * `server/` – TypeScript (Node) server: `npm ci && npm test && npm run dev`
-* `app-ios/` – SwiftUI app; generate the project with `xcodegen generate` (install: `brew install xcodegen`), then open `MyLand.xcodeproj`
+* `app-ios/` – SwiftUI app; generate the project with `xcodegen generate` (install: `brew install xcodegen`), then open `ConquerTheWorld.xcodeproj`
 * Domain terms: `../GLOSSARY.md`; decisions: `../docs/adr/`

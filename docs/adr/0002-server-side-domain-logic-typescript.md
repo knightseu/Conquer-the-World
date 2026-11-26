@@ -8,7 +8,7 @@ Requirement N1 (SPEC): the app must be portable to other platforms. Claim and sc
 ## Decision
 - Classification post-processing, loop detection, scoring and ownership run on the server.
 - Server is TypeScript (Node), with Postgres + PostGIS and `h3-js`.
-- The HTTP contract is documented in `myland/api/openapi.yaml`.
+- The HTTP contract is documented in `api/openapi.yaml`.
 
 ## Consequences
 - One small service and one database are enough for v1 (100 users).

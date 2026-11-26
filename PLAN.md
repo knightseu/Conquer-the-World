@@ -22,7 +22,7 @@ iPhone app (SwiftUI) ──HTTPS/JSON──> API service ──> Postgres + Post
 
 ### M0 – Foundations (≈ 1 week)
 - Create `GLOSSARY.md` (terms from SPEC §1) and ADRs for the three decisions above.
-- Repo layout: `myland/app-ios`, `myland/server`, `myland/api` (OpenAPI).
+- Repo layout: `app-ios/`, `server/`, `api/` (OpenAPI) at the repo root.
 - CI: server tests + lint; iOS build.
 - **Done when:** empty app and empty API deploy and talk to each other.
 

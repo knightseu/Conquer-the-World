@@ -1,6 +1,6 @@
 # Glossary
 
-Domain language for MyLand (`myland/`). Use these terms in code, issues and docs.
+Domain language for Conquer the World. Use these terms in code, issues and docs.
 
 | Term | Definition | Avoid |
 |---|---|---|
@@ -19,4 +19,4 @@ Domain language for MyLand (`myland/`). Use these terms in code, issues and docs
 | **Parcel** | A real-world named place made of Lands. Designed for, but not in v1. | |
 | **Leaderboard** | Per-Clan ranking of users, one for Exercising and one for Traveling, by Lands owned or Score. | |
 
-See `myland/SPEC.md` for requirements.
+See `SPEC.md` for requirements.
