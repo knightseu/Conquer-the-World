@@ -1,6 +1,6 @@
 # 0003. Parcel-plus-cell: a Land is an H3 resolution-10 cell
 
-Status: accepted (owner decision: parcel-plus-cell). Parcel layer and Occupation Percentage are out of v1, see `myland/TODO.md`.
+Status: accepted (owner decision: parcel-plus-cell). Parcel layer and Occupation Percentage are out of v1, see `TODO.md`.
 
 ## Context
 Ownership, scoring and map rendering need a stable unit. Free-form enclosed polygons overlap and fragment, which makes "owner of a land" ill-defined and expensive to query.
