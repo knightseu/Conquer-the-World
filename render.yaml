@@ -1,0 +1,29 @@
+# Render Blueprint (ADR 0006): one Starter web service running the API and the
+# pg-boss worker, and one Postgres with PostGIS, in Oregon.
+# GitHub Actions builds the image and triggers deploys; see docs/deploy.md.
+services:
+  - type: web
+    name: ctw-api
+    runtime: image
+    image:
+      url: ghcr.io/knightseu/conquer-the-world-server:latest
+      creds:
+        fromRegistryCreds:
+          name: ghcr
+    plan: starter
+    region: oregon
+    healthCheckPath: /health
+    preDeployCommand: node node_modules/node-pg-migrate/bin/node-pg-migrate.js up -m migrations
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: ctw-db
+          property: connectionString
+      - key: SENTRY_DSN
+        sync: false
+
+databases:
+  - name: ctw-db
+    plan: basic-256mb
+    region: oregon
+    postgresMajorVersion: "17"

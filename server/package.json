@@ -1,0 +1,54 @@
+{
+  "name": "conquer-the-world-server",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.34.9",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "tsx watch --env-file-if-exists=.env src/main.ts",
+    "build": "tsc -p tsconfig.build.json",
+    "start": "node dist/main.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "biome check .",
+    "format": "biome check --write .",
+    "test": "vitest run",
+    "test:unit": "vitest run src",
+    "migrate": "node-pg-migrate up -m migrations",
+    "gen:api": "openapi-typescript ../api/openapi.yaml -o src/http/api-types.ts && biome format --write src/http/api-types.ts",
+    "gen:db": "kysely-codegen --dialect postgres --out-file src/db/schema.ts --include-pattern 'public.*' --exclude-pattern '{public.pgmigrations,public.spatial_ref_sys,public.geography_columns,public.geometry_columns}' && biome format --write src/db/schema.ts",
+    "migrate:create": "node-pg-migrate create -m migrations --migration-file-language sql"
+  },
+  "dependencies": {
+    "@sentry/node": "^11.18.0",
+    "fastify": "^5.12.8",
+    "h3-js": "^4.5.0",
+    "jsts": "^2.12.1",
+    "kysely": "^0.29.9",
+    "node-pg-migrate": "^9.0.0",
+    "pg": "^8.23.1",
+    "pg-boss": "^12.40.0",
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.6.9",
+    "@testcontainers/postgresql": "^12.2.2",
+    "@types/node": "^24.19.4",
+    "@types/pg": "^8.23.1",
+    "fast-check": "^4.11.0",
+    "kysely-codegen": "^0.20.0",
+    "openapi-typescript": "^7.13.0",
+    "pino-pretty": "^13.2.0",
+    "testcontainers": "^12.2.2",
+    "tsx": "^4.23.15",
+    "typescript": "5.9.3",
+    "vitest": "^5.1.2"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}

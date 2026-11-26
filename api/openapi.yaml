@@ -1,0 +1,47 @@
+openapi: 3.1.0
+info:
+  title: Conquer the World API
+  version: 0.1.0
+  description: |
+    HTTP contract between the clients and the server (ADR 0002). Source of truth:
+    server types and iOS client code are generated from this file.
+    Only the M0 health endpoint exists so far; the rest of the contract is being
+    designed in "API contract outline".
+servers:
+  - url: http://localhost:3000
+    description: Local development
+paths:
+  /health:
+    get:
+      operationId: getHealth
+      summary: Liveness and database check
+      security: []
+      responses:
+        '200':
+          description: The service is up and can reach the database.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+        '503':
+          description: The service is up but the database is unreachable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Health'
+components:
+  schemas:
+    Health:
+      type: object
+      additionalProperties: false
+      required: [status, database, version]
+      properties:
+        status:
+          type: string
+          enum: [ok, degraded]
+        database:
+          type: string
+          enum: [ok, unreachable]
+        version:
+          type: string
+          description: Deployed commit, or "dev".

@@ -1,0 +1,22 @@
+# Local PostGIS for development. `docker compose up -d`, then `pnpm --dir server migrate`.
+# imresamu/postgis is the multi-arch build of the official postgis/postgis image
+# (postgis/postgis is amd64-only, which is slow on Apple Silicon).
+services:
+  db:
+    image: imresamu/postgis:17-3.5
+    environment:
+      POSTGRES_USER: ctw
+      POSTGRES_PASSWORD: ctw
+      POSTGRES_DB: ctw
+    ports:
+      - "${CTW_DB_PORT:-5433}:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ctw -d ctw"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  db-data:

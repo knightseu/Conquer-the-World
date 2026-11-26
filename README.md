@@ -18,7 +18,9 @@
 # Repo layout
 * `SPEC.md`, `PLAN.md` – requirements and implementation plan
 * `TODO.md` – deferred decisions and unverified items
-* `api/openapi.yaml` – HTTP contract between clients and server
-* `server/` – TypeScript (Node) server: `npm ci && npm test && npm run dev`
-* `app-ios/` – SwiftUI app; generate the project with `xcodegen generate` (install: `brew install xcodegen`), then open `ConquerTheWorld.xcodeproj`
-* Domain terms: `../GLOSSARY.md`; decisions: `../docs/adr/`
+* `GLOSSARY.md` – domain terms; `docs/adr/` – decisions
+* `api/openapi.yaml` – HTTP contract between clients and server (source of truth; server types and the iOS client are generated from it)
+* `server/` – TypeScript (Node 24, Fastify, Kysely, pg-boss) server. Pure domain logic lives in `server/src/domain/`.
+  * `docker compose up -d` (PostGIS on localhost:5433), then in `server/`: `pnpm install`, `pnpm test`, `pnpm dev`
+  * Deploys: `docs/deploy.md`
+* `app-ios/` – SwiftUI app (iOS 17+). Install XcodeGen (`brew install xcodegen`), run `xcodegen generate` in `app-ios/`, then open `ConquerTheWorld.xcodeproj`
